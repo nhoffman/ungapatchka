@@ -2,6 +2,10 @@
 pypackage: a python package template
 ====================================
 
+*ungapatchka* Yiddish word that describes the overly ornate, busy,
+ ridiculously over-decorated, and garnished to the point of
+ distaste. (www.urbandictionary.com/define.php?term=ungapatchka)
+
 .. contents:: Table of Contents
 
 dependencies
