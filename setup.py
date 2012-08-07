@@ -1,7 +1,7 @@
 """
 Setup.py template. Try this:
 
-    sed 's/pypackage/newpackagename/g;s/pypack/newscriptname/g' setup.py
+    sed 's/ungapatchka/newpackagename/g;s/kapow/newscriptname/g' setup.py
 """
 
 import os
@@ -10,20 +10,20 @@ import shutil
 from distutils.core import setup
 from os.path import join
 
-subprocess.call('git log --pretty=format:%h -n 1 > pypackage/data/sha', shell = True)
-subprocess.call('git shortlog --format="XXYYXX%h" | grep -c XXYYXX > pypackage/data/ver', shell = True)
+subprocess.call('git log --pretty=format:%h -n 1 > ungapatchka/data/sha', shell = True)
+subprocess.call('git shortlog --format="XXYYXX%h" | grep -c XXYYXX > ungapatchka/data/ver', shell = True)
 
-from pypackage import __version__
+from ungapatchka import __version__
 
 params = {'author': 'Your name',
           'author_email': 'Your email',
           'description': 'Package description',
-          'name': 'pypackage',
-          'packages': ['pypackage','pypackage.scripts','pypackage.subcommands'],
-          'package_dir': {'pypackage': 'pypackage'},
-          'scripts': ['pypack'],
+          'name': 'ungapatchka',
+          'packages': ['ungapatchka','ungapatchka.scripts','ungapatchka.subcommands'],
+          'package_dir': {'ungapatchka': 'ungapatchka'},
+          'scripts': ['kapow'],
           'version': __version__,
-          'package_data': {'pypackage': [join('data',f) for f in ['sha','ver']]}
+          'package_data': {'ungapatchka': [join('data',f) for f in ['sha','ver']]}
           }
     
 setup(**params)

@@ -10,7 +10,7 @@ import pprint
 import sys
 import json
 
-from pypackage.utils import get_outfile, flatten, mkdir
+from ungapatchka.utils import get_outfile, flatten, mkdir
 
 from __init__ import TestBase
 import __init__ as config

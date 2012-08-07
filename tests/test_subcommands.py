@@ -8,8 +8,8 @@ import logging
 import pprint
 import sys
 
-from pypackage.scripts.main import main
-from pypackage.subcommands import subcommand_template
+from ungapatchka.scripts.main import main
+from ungapatchka.subcommands import subcommand_template
 
 from __init__ import TestCaseSuppressOutput, TestBase
 import __init__ as config

@@ -7,7 +7,7 @@ from argparse import RawDescriptionHelpFormatter
 import sys
 import os
 import logging
-from pypackage import subcommands, __version__ as version, __doc__ as docstring
+from ungapatchka import subcommands, __version__ as version, __doc__ as docstring
 
 def main(argv):
     action, arguments = parse_arguments(argv)

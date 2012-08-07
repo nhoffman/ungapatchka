@@ -1,5 +1,5 @@
 ====================================
-pypackage: a python package template
+kapowage: a python package template
 ====================================
 
 *ungapatchka* Yiddish word that describes the overly ornate, busy,
@@ -17,11 +17,12 @@ dependencies
 installation
 ============
 
-Clone the project from the git repository::
+Clone the project from the git repository and create a new
+project. You will need to choose a name for the project (let's say
+"mypackage"), and for the main script ("runme")::
 
-    cd ~/src
     git clone git@url-to-repo/opiates.git
-    cd pypackage
+    cd ungapatchka
 
 Now installation can be performed using ``distutils`` (which has no
 dependencies outside the Python standard library)::
@@ -48,8 +49,8 @@ This project has the following structure::
     │   └── README.rst
     ├── doc
     │   └── README.rst
-    ├── pypack
-    ├── pypackage
+    ├── kapow
+    ├── ungapatchka
     │   ├── __init__.py
     │   ├── scripts
     │   │   ├── __init__.py
@@ -74,7 +75,7 @@ with contents as follows:
 * ``dev`` - development tools not essential for the primary
    functionality of the application.
 * ``doc`` - files related to project documentation.
-* ``pypackage`` - the Python package implementing most of the project
+* ``ungapatchka`` - the Python package implementing most of the project
    functionality. This subdirectory is installed to the system. You
    will want to rename this.
 * ``testfiles`` - files and data used for testing.
@@ -85,10 +86,10 @@ versions
 
 We use abbrevited git sha hashes to identify the software version::
 
-    % ./pypack -V
+    % ./kapow -V
     0128.9790c13
 
-The version information is saved in ``pypackage/data`` when ``setup.py``
+The version information is saved in ``ungapatchka/data`` when ``setup.py``
 is run (on installation, or even by executing ``python setup.py
 -h``). By default the version number appears in the name of the output
 file.
@@ -96,18 +97,18 @@ file.
 execution
 =========
 
-The ``pypack`` script provides the user interface, and uses standard
+The ``kapow`` script provides the user interface, and uses standard
 UNIX command line syntax. Note that for development, it is convenient
-to run ``pypack`` from within the project directory by specifying the
+to run ``kapow`` from within the project directory by specifying the
 relative path to the script::
 
-    % ./pypack
+    % ./kapow
 
 Commands are constructed as follows. Every command starts with the
 name of the script, followed by an "action" followed by a series of
 required or optional "arguments". The name of the script, the action,
 and options and their arguments are entered on the command line
-separated by spaces. Help text is available for both the ``pypack``
+separated by spaces. Help text is available for both the ``kapow``
 script and individual actions using the ``-h`` or ``--help`` options.
 
 unit tests

@@ -4,7 +4,7 @@ import os
 from os import path, mkdir
 import unittest
 
-from pypackage.utils import mkdir
+from ungapatchka.utils import mkdir
 
 # set up logging for unit tests
 verbosity_flag = [x for x in sys.argv if x.startswith('-v')]
