@@ -120,8 +120,7 @@ We use abbrevited git sha hashes to identify the software version::
 
 The version information is saved in ``ungapatchka/data`` when ``setup.py``
 is run (on installation, or even by executing ``python setup.py
--h``). By default the version number appears in the name of the output
-file.
+-h``). 
 
 unit tests
 ==========
