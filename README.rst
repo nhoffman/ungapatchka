@@ -1,10 +1,11 @@
-====================================
-kapowage: a python package template
-====================================
+======================================
+ungapatchka: a python package template
+======================================
 
-*ungapatchka* Yiddish word that describes the overly ornate, busy,
- ridiculously over-decorated, and garnished to the point of
- distaste. (www.urbandictionary.com/define.php?term=ungapatchka)
+ungapatchka
+    Yiddish word that describes the overly ornate, busy, ridiculously
+    over-decorated, and garnished to the point of
+    distaste. (www.urbandictionary.com/define.php?term=ungapatchka)
 
 .. contents:: Table of Contents
 
@@ -19,10 +20,13 @@ installation
 
 Clone the project from the git repository and create a new
 project. You will need to choose a name for the project (let's say
-"mypackage"), and for the main script ("runme")::
+"myproject"), and for the main script ("runme")::
 
-    git clone git@url-to-repo/opiates.git
-    cd ungapatchka
+    git clone git://github.com/nhoffman/ungapatchka.git myproject
+    cd myproject
+    dev/setup.sh myproject runme 
+
+Kaopw! A new project.
 
 Now installation can be performed using ``distutils`` (which has no
 dependencies outside the Python standard library)::
