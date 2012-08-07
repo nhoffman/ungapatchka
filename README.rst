@@ -23,8 +23,7 @@ project. You will need to choose a name for the project (let's say
 "myproject"), and for the main script ("runme")::
 
     git clone git://github.com/nhoffman/ungapatchka.git myproject
-    cd myproject
-    dev/setup.sh myproject runme 
+    cd myproject && dev/setup.sh myproject runme 
 
 Kaopw! A new project.
 
