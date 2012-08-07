@@ -22,10 +22,19 @@ Clone the project from the git repository to create a new
 project. You will need to choose a name for the project (let's say
 "myproject"), and for the main script ("runme")::
 
-    git clone git://github.com/nhoffman/ungapatchka.git myproject
-    cd myproject && dev/setup.sh myproject runme 
+    $ git clone git://github.com/nhoffman/ungapatchka.git myproject
+    $ cd myproject && dev/setup.sh myproject runme 
 
-Kaopw! A new project.
+Kaopw! A new project with a new git repo::
+
+    $ git --no-pager log -n 1
+    commit 06a5280d89dc47f6a613488a96d244f4267f6b42
+    Author: Noah Hoffman
+    Date:   Mon Aug 6 22:46:46 2012 -0700
+
+	first commit
+    $ ./runme --version      
+    0001.06a5280
 
 Now installation can be performed using ``distutils`` (which has no
 dependencies outside the Python standard library)::
