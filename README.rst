@@ -18,7 +18,7 @@ dependencies
 installation
 ============
 
-Clone the project from the git repository and create a new
+Clone the project from the git repository to create a new
 project. You will need to choose a name for the project (let's say
 "myproject"), and for the main script ("runme")::
 
@@ -85,19 +85,6 @@ with contents as follows:
 * ``testfiles`` - files and data used for testing.
 * ``tests`` - subpackage implementing unit tests.
 
-versions
-========
-
-We use abbrevited git sha hashes to identify the software version::
-
-    % ./kapow -V
-    0128.9790c13
-
-The version information is saved in ``ungapatchka/data`` when ``setup.py``
-is run (on installation, or even by executing ``python setup.py
--h``). By default the version number appears in the name of the output
-file.
-
 execution
 =========
 
@@ -114,6 +101,19 @@ required or optional "arguments". The name of the script, the action,
 and options and their arguments are entered on the command line
 separated by spaces. Help text is available for both the ``kapow``
 script and individual actions using the ``-h`` or ``--help`` options.
+
+versions
+========
+
+We use abbrevited git sha hashes to identify the software version::
+
+    % ./kapow -V
+    0128.9790c13
+
+The version information is saved in ``ungapatchka/data`` when ``setup.py``
+is run (on installation, or even by executing ``python setup.py
+-h``). By default the version number appears in the name of the output
+file.
 
 unit tests
 ==========
