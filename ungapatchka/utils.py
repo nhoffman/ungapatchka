@@ -1,16 +1,16 @@
 import os
-import shutil
-import logging
 import bz2
-import sys
 import gzip
-import time
+import logging
 import operator
+import shutil
+import sys
+import time
 
+from itertools import chain, takewhile, izip_longest
 from csv import DictReader
 from collections import Iterable, OrderedDict
 from os import path
-from itertools import chain, takewhile, izip_longest
 
 from __init__ import __version__
 
@@ -91,6 +91,25 @@ def mkdir(dirpath, clobber = False):
         raise OSError('Failed to create %s' % dirpath)
 
     return dirpath
+
+def to_ascii(nums):
+    """
+    Encode a list of integers as an ascii string. Max allowed value is
+    126-48 = 78 (avoids many special characters that might cause
+    trouble). The purpose of this encoding is to store run-length
+    encodings, so we're asuming that values > 78 are not plausible.
+    """
+
+    if max(nums) > 78:
+        raise ValueError('values over 78 are not allowed')
+
+    return ''.join([chr(i+48) for i in nums])
+
+def from_ascii(chars):
+    """
+    Decode an ascii-encoded list of integers.
+    """
+    return [ord(c)-48 for c in chars]
 
 def cast(val):
     for func in [int, float, lambda x: x.strip()]:
