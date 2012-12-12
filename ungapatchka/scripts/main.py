@@ -4,9 +4,9 @@ Assembles subcommands and provides top-level script.
 
 import argparse
 from argparse import RawDescriptionHelpFormatter
-import sys
 import logging
 import pkgutil
+import sys
 from importlib import import_module
 from ungapatchka import subcommands, __version__ as version, __doc__ as docstring
 
