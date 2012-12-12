@@ -4,6 +4,7 @@ Assembles subcommands and provides top-level script.
 
 import argparse
 from argparse import RawDescriptionHelpFormatter
+from collections import defaultdict
 import logging
 import pkgutil
 import sys
@@ -61,22 +62,28 @@ def parse_arguments(argv):
     parser_help.add_argument('action', nargs=1)
     # End help sub-command
 
+    # Organize submodules by argv
+    run_action = defaultdict(list)
+    for _, name, _ in pkgutil.iter_modules(subcommands.__path__):
+        run_action[name in argv].append(name)
+
     actions = {}
 
-    for _, name, _ in pkgutil.iter_modules(subcommands.__path__):
+    for name in run_action[True] or run_action[False]:
         # set up subcommand help text. The first line of the dosctring
         # in the module is displayed as the help text in the
         # script-level help message (`script -h`). The entire
         # docstring is displayed in the help message for the
         # individual subcommand ((`script action -h`))
-        if name in argv:
-            mod = import_module('{}.{}'.format(subcommands.__name__, name))
-            subparser = subparsers.add_parser(name,
-                                              help = mod.__doc__.lstrip().split('\n', 1)[0],
-                                              description = mod.__doc__,
-                                              formatter_class = RawDescriptionHelpFormatter)
-            mod.build_parser(subparser)
-            actions[name] = mod.action
+        # if no individual subcommand is specified (run_action[False]),
+        # a full list of docstrings is displayed
+        mod = import_module('{}.{}'.format(subcommands.__name__, name))
+        subparser = subparsers.add_parser(name,
+                                          help = mod.__doc__.lstrip().split('\n', 1)[0],
+                                          description = mod.__doc__,
+                                          formatter_class = RawDescriptionHelpFormatter)
+        mod.build_parser(subparser)
+        actions[name] = mod.action
     # Determine we have called ourself (e.g. "help <action>")
     # Set arguments to display help if parameter is set
     #           *or*
