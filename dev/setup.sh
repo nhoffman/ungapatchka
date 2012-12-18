@@ -6,9 +6,10 @@ if [[ -z $1 ]] || [[ -z $2 ]]; then
 fi
 
 for fn in $(find . -name "*.py" -or -name kapow); do
-    sed -i -e "s/ungapatchka/$1/g" $fn
-    sed -i -e "s/kapow/$2/g" $fn
+    sed -i .removeme -e "s/ungapatchka/$1/g" $fn
+    sed -i .removeme -e "s/kapow/$2/g" $fn
 done
+find . -name "*.removeme" | xargs rm
 
 mv ungapatchka $1
 mv kapow $2
