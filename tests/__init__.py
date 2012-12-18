@@ -1,7 +1,7 @@
 import sys
 import logging
 import os
-from os import path, mkdir
+from os import path
 import unittest
 
 from ungapatchka.utils import mkdir
@@ -43,20 +43,20 @@ class TestBase(unittest.TestCase):
         Create outdir as outpudir/module.class.method (destructively
         if clobber is True).
         """
-        
+
         funcname = '.'.join(self.id().split('.')[-3:])
         outdir = path.join(self.outputdir, funcname)
         mkdir(outdir, clobber)
         return outdir
-    
+
 class TestCaseSuppressOutput(unittest.TestCase):
 
-    def setUp(self):        
+    def setUp(self):
         self.funcname = '_'.join(self.id().split('.')[-2:])
         self.suppress_output = log.getEffectiveLevel() >= logging.INFO
         if self.suppress_output:
             sys.stdout = sys.stderr = open(os.devnull, 'w')
-            
+
     def tearDown(self):
         if self.suppress_output:
             sys.stdout = sys.__stdout__

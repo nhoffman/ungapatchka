@@ -4,9 +4,10 @@ Assembles subcommands and provides top-level script.
 
 import argparse
 from argparse import RawDescriptionHelpFormatter
-import sys
-import os
 import logging
+import pkgutil
+import sys
+from importlib import import_module
 from ungapatchka import subcommands, __version__ as version, __doc__ as docstring
 
 def main(argv):
@@ -35,7 +36,7 @@ def parse_arguments(argv):
     """
 
     parser = argparse.ArgumentParser(description=docstring)
-    
+
     parser.add_argument('-V', '--version', action='version',
         version = version,
         help = 'Print the version number and exit')
@@ -53,28 +54,34 @@ def parse_arguments(argv):
     ##########################
 
     subparsers = parser.add_subparsers(dest='subparser_name')
-    
+
     # Begin help sub-command
     parser_help = subparsers.add_parser(
         'help', help='Detailed help for actions using `help <action>`')
     parser_help.add_argument('action', nargs=1)
     # End help sub-command
 
+    # Organize submodules by argv
+    modules = [name for _,name,_ in pkgutil.iter_modules(subcommands.__path__)]
+    run = filter(lambda name: name in argv, modules)
+
     actions = {}
 
-    for name, mod in subcommands.itermodules(os.path.split(subcommands.__file__)[0]):
+    for name in run or modules:
         # set up subcommand help text. The first line of the dosctring
         # in the module is displayed as the help text in the
         # script-level help message (`script -h`). The entire
         # docstring is displayed in the help message for the
-        # individual subcommand ((`script action -h`)).
+        # individual subcommand ((`script action -h`))
+        # if no individual subcommand is specified (run_action[False]),
+        # a full list of docstrings is displayed
+        mod = import_module('{}.{}'.format(subcommands.__name__, name))
         subparser = subparsers.add_parser(name,
-                                          help = mod.__doc__.lstrip().split('\n', 1)[0],                                          
+                                          help = mod.__doc__.lstrip().split('\n', 1)[0],
                                           description = mod.__doc__,
                                           formatter_class = RawDescriptionHelpFormatter)
         mod.build_parser(subparser)
         actions[name] = mod.action
-
     # Determine we have called ourself (e.g. "help <action>")
     # Set arguments to display help if parameter is set
     #           *or*
