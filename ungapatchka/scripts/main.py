@@ -67,6 +67,9 @@ def parse_arguments(argv):
 
     actions = {}
 
+    # `run` will contain the module corresponding to a single
+    # subcommand if provided; otherwise, generate top-level help
+    # message from all submodules in `modules`.
     for name in run or modules:
         # set up subcommand help text. The first line of the dosctring
         # in the module is displayed as the help text in the
@@ -76,10 +79,10 @@ def parse_arguments(argv):
         # if no individual subcommand is specified (run_action[False]),
         # a full list of docstrings is displayed
         mod = import_module('{}.{}'.format(subcommands.__name__, name))
-        subparser = subparsers.add_parser(name,
-                                          help = mod.__doc__.lstrip().split('\n', 1)[0],
-                                          description = mod.__doc__,
-                                          formatter_class = RawDescriptionHelpFormatter)
+        subparser = subparsers.add_parser(
+            name, help = mod.__doc__.lstrip().split('\n', 1)[0],
+            description = mod.__doc__,
+            formatter_class = RawDescriptionHelpFormatter)
         mod.build_parser(subparser)
         actions[name] = mod.action
     # Determine we have called ourself (e.g. "help <action>")
