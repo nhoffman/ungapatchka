@@ -5,7 +5,11 @@ if [[ -z $1 ]] || [[ -z $2 ]]; then
     exit
 fi
 
-find . -name "*.py" -or -name kapow | xargs sed -i "s/ungapatchka/$1/g;s/kapow/$2/g"
+for fn in $(find . -name "*.py" -or -name kapow); do
+    sed -i -e "s/ungapatchka/$1/g" $fn
+    sed -i -e "s/kapow/$2/g" $fn
+done
+
 mv ungapatchka $1
 mv kapow $2
 
