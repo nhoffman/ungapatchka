@@ -1,5 +1,7 @@
 """
-Package description in top-level __init__.py
+Package description (in ungapatchka/__init__.py)
+
+Update me!
 """
 
 from os.path import join, dirname

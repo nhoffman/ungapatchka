@@ -5,10 +5,12 @@ if [[ -z $1 ]] || [[ -z $2 ]]; then
     exit
 fi
 
-python dev/insteadofsed.py ungapatchka $1 \
-    $(find . -name "*.py" -or -name kapow)
+if [[ $1 == $2 ]]; then
+    echo "Projectame and scriptname must be different."
+    exit
+fi
 
-python dev/insteadofsed.py kapow $2 \
+./kapow repl -r ungapatchka:$1 -r kapow:$2 \
     $(find . -name "*.py" -or -name kapow)
 
 mv ungapatchka $1
