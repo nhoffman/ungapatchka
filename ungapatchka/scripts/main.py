@@ -4,7 +4,6 @@ Assembles subcommands and provides top-level script.
 
 import argparse
 from argparse import RawDescriptionHelpFormatter
-from collections import defaultdict
 import logging
 import pkgutil
 import sys
@@ -63,13 +62,12 @@ def parse_arguments(argv):
     # End help sub-command
 
     # Organize submodules by argv
-    run_action = defaultdict(list)
-    for _, name, _ in pkgutil.iter_modules(subcommands.__path__):
-        run_action[name in argv].append(name)
+    modules = [name for _,name,_ in pkgutil.iter_modules(subcommands.__path__)]
+    run = filter(lambda name: name in argv, modules)
 
     actions = {}
 
-    for name in run_action[True] or run_action[False]:
+    for name in run or modules:
         # set up subcommand help text. The first line of the dosctring
         # in the module is displayed as the help text in the
         # script-level help message (`script -h`). The entire
