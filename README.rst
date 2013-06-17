@@ -9,6 +9,13 @@ ungapatchka
 
 .. contents:: Table of Contents
 
+why?
+====
+
+* Provides a basic package framework including a CLI using ``argparse`` that divides functionality into subcommands (à la git, apt-get, etc)
+* The CLI entry point imports the local version of the python package when it is invoked using an absolute or relative path (see below).
+* Provides some useful utilities, for example ``utils.Opener`` as a replacement for ``argparse.FileType``
+
 dependencies
 ============
 
@@ -23,7 +30,7 @@ project. You will need to choose a name for the project (let's say
 "myproject"), and for the main script ("runme")::
 
     $ git clone git://github.com/nhoffman/ungapatchka.git myproject
-    $ cd myproject && dev/setup.sh myproject runme 
+    $ cd myproject && dev/setup.sh myproject runme
 
 Kaopw! A new project with a new git repo::
 
@@ -33,7 +40,7 @@ Kaopw! A new project with a new git repo::
     Date:   Mon Aug 6 22:46:46 2012 -0700
 
 	first commit
-    $ ./runme --version      
+    $ ./runme --version
     0001.06a5280
 
 Now installation can be performed using ``distutils`` (which has no
@@ -84,14 +91,13 @@ This project has the following structure::
 
 with contents as follows:
 
-* ``dev`` - development tools not essential for the primary
-   functionality of the application.
+* ``dev`` - development tools not essential for the primary functionality of the application.
 * ``doc`` - files related to project documentation.
-* ``ungapatchka`` - the Python package implementing most of the project
-   functionality. This subdirectory is installed to the system. You
-   will want to rename this.
+* ``ungapatchka`` - the Python package implementing most of the project functionality. This subdirectory is installed to the system.
 * ``testfiles`` - files and data used for testing.
 * ``tests`` - subpackage implementing unit tests.
+
+Note that ``kapow`` and ``ungapatchka`` are placeholder names that are replaced with your script and project names during setup.
 
 execution
 =========
@@ -101,7 +107,17 @@ UNIX command line syntax. Note that for development, it is convenient
 to run ``kapow`` from within the project directory by specifying the
 relative path to the script::
 
-    % ./kapow
+    % cd ungapatchka
+    % ./kapow --help
+
+or::
+
+   % path/to/ungapatchka/kapow --help
+
+When invoked this way, the local version of the package is imported,
+even if the version of the package is installed to the system. This is
+very handy for development, and can avoid the requirement for a
+virtualenv in many cases.
 
 Commands are constructed as follows. Every command starts with the
 name of the script, followed by an "action" followed by a series of
@@ -120,7 +136,7 @@ We use abbrevited git sha hashes to identify the software version::
 
 The version information is saved in ``ungapatchka/data`` when ``setup.py``
 is run (on installation, or even by executing ``python setup.py
--h``). 
+-h``).
 
 unit tests
 ==========
