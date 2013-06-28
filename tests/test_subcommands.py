@@ -18,5 +18,4 @@ class TestTemplate(TestCaseSuppressOutput, TestBase):
         self.assertRaises(SystemExit, main, ['-h'])
 
     def test01(self):
-        main(['subcommand_template', 'infile', 'outfile', '--monkey-type', 'macaque'])
-
+        main(['template', 'infile', 'outfile', '--monkey-type', 'macaque'])

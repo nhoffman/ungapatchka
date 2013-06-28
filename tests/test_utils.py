@@ -6,7 +6,7 @@ from os import path
 import unittest
 import logging
 
-from ungapatchka.utils import get_outfile, flatten, mkdir
+from ungapatchka.utils import flattener, mkdir
 
 from __init__ import TestBase
 log = logging.getLogger(__name__)
@@ -18,72 +18,4 @@ class Args(object):
 class TestFlatten(unittest.TestCase):
     def test01(self):
         L = [[1,2],['three',['four',5]]]
-        flatten(L)
-
-class TestGetOutfile(TestBase):
-
-    def setUp(self):
-        self.outdir = self.mkoutdir()
-        self.infile = path.join(self.outdir, 'infile.txt')
-        with open(self.infile, 'w') as f:
-            f.write('buh\n')
-
-    def tearDown(self):
-        pass
-
-    def test01(self):
-        args = Args(infile = self.infile,
-                    outfile = None,
-                    outdir = None)
-
-        outfile = get_outfile(args, label = 'qa')
-        log.debug(outfile)
-
-    def test02(self):
-        args = Args(infile = self.infile,
-                    outfile = path.join(self.outdir, 'outfile.csv'),
-                    outdir = None)
-
-        self.assertRaises(OSError, get_outfile, args, label = 'qa')
-
-    def test03(self):
-        args = Args(infile = self.infile,
-                    outfile = open(path.join(self.outdir, 'outfile.csv'), 'w'),
-                    outdir = None)
-
-        outfile = get_outfile(args, label = 'qa')
-        log.debug(outfile)
-
-    def test04(self):
-        outdir = mkdir(path.join(self.outdir, 'subdir'), clobber = True)
-        args = Args(infile = self.infile,
-                    outfile = None,
-                    outdir = outdir)
-
-        outfile = get_outfile(args, label = 'qa')
-        log.debug(outfile)
-
-    def test05(self):
-        args = Args(infile = self.infile,
-                    outfile = None,
-                    outdir = None)
-
-        outfile = get_outfile(args)
-        log.debug(outfile)
-
-    def test06(self):
-        args = Args(infile = self.infile,
-                    outfile = None,
-                    outdir = None)
-
-        outfile = get_outfile(args, include_version = False)
-        log.debug(outfile)
-
-    def test07(self):
-        args = Args(infile = self.infile,
-                    outfile = None,
-                    outdir = None)
-
-        self.assertRaises(OSError, get_outfile, args, ext = 'txt', include_version = False)
-
-
+        flattener(L)
