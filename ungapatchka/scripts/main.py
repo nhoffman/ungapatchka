@@ -53,7 +53,7 @@ def parse_arguments(argv):
     # Setup all sub-commands #
     ##########################
 
-    subparsers = parser.add_subparsers(dest='subparser_name')
+    subparsers = parser.add_subparsers(dest='subparser_name', title='actions')
 
     # Begin help sub-command
     parser_help = subparsers.add_parser(
@@ -79,8 +79,14 @@ def parse_arguments(argv):
         # if no individual subcommand is specified (run_action[False]),
         # a full list of docstrings is displayed
         mod = import_module('{}.{}'.format(subcommands.__name__, name))
+
+        if mod.__doc__.strip():
+            helpstr = mod.__doc__.lstrip().split('\n', 1)[0]
+        else:
+            helpstr = '<add help text in docstring>'
+
         subparser = subparsers.add_parser(
-            name, help = mod.__doc__.lstrip().split('\n', 1)[0],
+            name, help = helpstr,
             description = mod.__doc__,
             formatter_class = RawDescriptionHelpFormatter)
         mod.build_parser(subparser)
