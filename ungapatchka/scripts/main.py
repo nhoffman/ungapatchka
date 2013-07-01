@@ -9,6 +9,7 @@ import pkgutil
 import sys
 from importlib import import_module
 from ungapatchka import subcommands, __version__ as version, __doc__ as docstring
+from ungapatchka.utils import Opener
 
 def main(argv):
     action, arguments = parse_arguments(argv)
@@ -25,8 +26,7 @@ def main(argv):
     else:
         logformat = '%(message)s'
 
-    # set up logging
-    logging.basicConfig(file=sys.stdout, format=logformat, level=loglevel)
+    logging.basicConfig(stream=arguments.logfile, format=logformat, level=loglevel)
 
     return action(arguments)
 
@@ -40,7 +40,6 @@ def parse_arguments(argv):
     parser.add_argument('-V', '--version', action='version',
         version = version,
         help = 'Print the version number and exit')
-
     parser.add_argument('-v', '--verbose',
         action='count', dest='verbosity', default=1,
         help='Increase verbosity of screen output (eg, -v is verbose, '
@@ -48,6 +47,9 @@ def parse_arguments(argv):
     parser.add_argument('-q', '--quiet',
         action='store_const', dest='verbosity', const=0,
         help='Suppress output')
+    parser.add_argument('--logfile', default=sys.stderr,
+        type= Opener('w'), metavar='FILE',
+        help='Write logging messages to FILE [default stderr]')
 
     ##########################
     # Setup all sub-commands #
@@ -63,6 +65,7 @@ def parse_arguments(argv):
 
     # Organize submodules by argv
     modules = [name for _,name,_ in pkgutil.iter_modules(subcommands.__path__)]
+    modules = [m for m in modules if not m.startswith('_')]
     run = filter(lambda name: name in argv, modules)
 
     actions = {}
