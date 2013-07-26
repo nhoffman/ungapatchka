@@ -12,10 +12,11 @@ from os import path
 
 log = logging.getLogger(__name__)
 
+
 def flattener(iterable):
     """
     Flatten nested iterables (not strings or dict-like objects).
-    
+
     Poached from http://stackoverflow.com/questions/2158395/flatten-an-irregular-list-of-lists-in-python
     """
     for el in iterable:
@@ -25,7 +26,7 @@ def flattener(iterable):
         else:
             yield el
 
-            
+
 def chunker(seq, size, combine_last = None):
     """
     Break sequence seq into lists of length `size`. If the length of
@@ -55,13 +56,14 @@ def grouper(n, iterable, pad=True):
     else:
         return (takewhile(lambda x: x is not None, c) for c in iterout)
 
-    
+
 def cast(val):
     for func in [int, float, lambda x: x.strip()]:
         try:
             return func(val)
         except ValueError:
             pass
+
 
 def mkdir(dirpath, clobber = False):
     """
@@ -90,7 +92,9 @@ def parse_extras(s, numeric = True):
     "key1:val1,key2:val2"
     """
 
-    return OrderedDict((k, cast(v) if numeric else v) for k,v in [e.split(':') for e in s.split(',')])
+    return OrderedDict((k, cast(v) if numeric else v)
+                       for k, v in [e.split(':') for e in s.split(',')])
+
 
 class Opener(object):
     """Factory for creating file objects
@@ -123,11 +127,14 @@ class Opener(object):
         args_str = ', '.join(repr(arg) for arg in args if arg != -1)
         return '{}({})'.format(type(self).__name__, args_str)
 
+
 def opener(pth, mode = 'r', bufsize = -1):
     return Opener(mode, bufsize)(pth)
 
+
 class Csv2Dict(object):
-    """Easy way to convert a csv file into a dictionary using the argparse type function
+    """Easy way to convert a csv file into a dictionary
+    using the argparse type function
 
     Keyword Arguments:
         - index -- csv column to key index the dictionary
@@ -159,6 +166,6 @@ class Csv2Dict(object):
 
         return results
 
+
 def csv2dict(pth, index, value, *args, **kwds):
     return Csv2Dict(index, value, args, kwds)(pth)
-
