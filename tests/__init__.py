@@ -30,6 +30,12 @@ outputdir = 'test_output'
 
 mkdir(outputdir)
 
+def get_testfile(fn):
+    pth = path.join(datadir, fn)
+    if not path.exists(pth):
+        raise ValueError('no such file "{}"'.format(pth))
+    return pth
+
 class TestBase(unittest.TestCase):
     """
     Base class for unit tests with methods for defining output
@@ -61,4 +67,3 @@ class TestCaseSuppressOutput(unittest.TestCase):
         if self.suppress_output:
             sys.stdout = sys.__stdout__
             sys.stderr = sys.__stderr__
-
