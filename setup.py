@@ -25,7 +25,7 @@ params = {'author': 'Your name',
           'scripts': ['kapow'],
           'version': __version__,
           'package_data': {'ungapatchka': [join('data',f) for f in ['sha','ver']]},
-          'test_suite': 'ungapatchka.test'
+          'test_suite': 'tests'
           }
 
 setup(**params)
