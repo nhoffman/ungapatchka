@@ -60,36 +60,7 @@ Subsequent (re)installation with pip should be performed using the
 architecture
 ============
 
-This project has the following structure::
-
-    % tree
-    .
-    ├── dev
-    │   └── README.rst
-    ├── doc
-    │   └── README.rst
-    ├── kapow
-    ├── ungapatchka
-    │   ├── __init__.py
-    │   ├── scripts
-    │   │   ├── __init__.py
-    │   │   └── main.py
-    │   ├── subcommands
-    │   │   ├── __init__.py
-    │   │   └── subcommand_template.py
-    │   └── utils.py
-    ├── README.rst
-    ├── setup.py
-    ├── testall
-    ├── testfiles
-    │   └── README.rst
-    ├── testone
-    └── tests
-	├── __init__.py
-	├── test_subcommands.py
-	└── test_utils.py
-
-with contents as follows:
+This project has the following subdirectories:
 
 * ``dev`` - development tools not essential for the primary functionality of the application.
 * ``doc`` - files related to project documentation.
