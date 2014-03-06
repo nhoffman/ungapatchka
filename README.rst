@@ -143,39 +143,19 @@ unit tests
 
 Unit tests are implemented using the ``unittest`` module in the Python
 standard library. The ``tests`` subdirectory is itself a Python
-package that imports the local version (ie, the version in the project
-directory, not the version installed to the system) of the
-package. All unit tests can be run like this::
+package that implements the tests. All unit tests can be run like this::
 
-    % ./testall
-    ...........
-    ----------------------------------------------------------------------
-    Ran 11 tests in 0.059s
-
-    OK
+    % python setup.py test
 
 A single unit test can be run by referring to a specific module,
 class, or method within the ``tests`` package using dot notation::
 
-    % ./testone -v tests.test_utils
-    test01 (tests.test_utils.TestFlatten) ... ok
-    test01 (tests.test_utils.TestGetOutfile) ... ok
-    test02 (tests.test_utils.TestGetOutfile) ... ok
-    test03 (tests.test_utils.TestGetOutfile) ... ok
-    test04 (tests.test_utils.TestGetOutfile) ... ok
-    test05 (tests.test_utils.TestGetOutfile) ... ok
-    test06 (tests.test_utils.TestGetOutfile) ... ok
-    test07 (tests.test_utils.TestGetOutfile) ... ok
-
-    ----------------------------------------------------------------------
-    Ran 8 tests in 0.046s
-
-    OK
+    % python setup.py test --test-suite tests.test_utils
 
 license
 =======
 
-Copyright (c) 2012 Noah Hoffman
+Copyright (c) 2014 Noah Hoffman
 
 Released under the MIT License:
 
