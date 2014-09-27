@@ -12,9 +12,13 @@ ungapatchka
 why?
 ====
 
-* Provides a basic package framework including a CLI using ``argparse`` that divides functionality into subcommands (à la git, apt-get, etc)
-* The CLI entry point imports the local version of the python package when it is invoked using an absolute or relative path (see below).
-* Provides some useful utilities, for example ``utils.Opener`` as a replacement for ``argparse.FileType``
+* Provides a basic package framework including a CLI using
+  ``argparse`` that divides functionality into subcommands (à la git,
+  apt-get, etc)
+* The CLI entry point imports the local version of the python package
+  when it is invoked using an absolute or relative path (see below).
+* Provides some useful utilities, for example ``utils.Opener`` as a
+  replacement for ``argparse.FileType``
 
 dependencies
 ============
@@ -29,7 +33,7 @@ Clone the project from the git repository to create a new
 project. You will need to choose a name for the project (let's say
 "myproject"), and for the main script ("runme")::
 
-    $ git clone git://github.com/nhoffman/ungapatchka.git myproject
+    $ git clone https://github.com/nhoffman/ungapatchka.git myproject
     $ cd myproject && dev/setup.sh myproject runme
 
 Kaopw! A new project with a new git repo::

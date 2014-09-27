@@ -22,6 +22,7 @@ from ..utils import Opener
 
 log = logging.getLogger(__name__)
 
+
 def build_parser(parser):
     parser.add_argument('infile',
                         default=sys.stdin, type=Opener('r'), nargs='?',
@@ -29,6 +30,7 @@ def build_parser(parser):
     parser.add_argument('-o', '--outfile',
                         default=sys.stdout, type=Opener('w'),
                         help='An optional output file [default stdout]')
+
 
 def action(args):
     args.outfile.write(args.infile.read())

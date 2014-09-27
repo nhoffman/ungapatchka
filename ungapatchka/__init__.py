@@ -4,15 +4,34 @@ Package description (in ungapatchka/__init__.py)
 Update me!
 """
 
-from os.path import join, dirname
+import glob
+from os import path
 
-_data = join(dirname(__file__), 'data')
+_data = path.join(path.dirname(__file__), 'data')
+
+
+def package_data(fname, pattern=None):
+    """Return the absolute path to a file included in package data,
+    raising ValueError if no such file exists. If `pattern` is
+    provided, return a list of matching files in package data
+    (ignoring `fname`).
+
+    """
+
+    if pattern:
+        return glob.glob(path.join(_data, pattern))
+
+    pth = path.join(_data, fname)
+
+    if not path.exists(pth):
+        raise ValueError('Package data does not contain the file %s' % fname)
+
+    return pth
 
 try:
-    with open(join(_data, 'sha')) as s, open(join(_data, 'ver')) as v:
-        sha = s.read().strip()
-        ver = int(v.read())
+    with open(package_data('ver')) as v:
+        ver = v.read().strip()
 except Exception, e:
-    __version__ = ''
-else:
-    __version__ = '%04i.%s' % (ver, sha)
+    ver = 'v0.0.0.unknown'
+
+__version__ = ver.lstrip('v')

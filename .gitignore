@@ -2,7 +2,7 @@
 build
 working
 test_output
-data/sha
 data/ver
 MANIFEST
 dist
+*-env
