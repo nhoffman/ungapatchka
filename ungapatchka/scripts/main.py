@@ -11,24 +11,6 @@ from importlib import import_module
 from ungapatchka import subcommands, __version__ as version, __doc__ as docstring
 from ungapatchka.utils import Opener
 
-def main(argv):
-    action, arguments = parse_arguments(argv)
-
-    loglevel = {
-        0: logging.ERROR,
-        1: logging.WARNING,
-        2: logging.INFO,
-        3: logging.DEBUG,
-    }.get(arguments.verbosity, logging.DEBUG)
-
-    if arguments.verbosity > 1:
-        logformat = '%(levelname)s %(module)s %(lineno)s %(message)s'
-    else:
-        logformat = '%(message)s'
-
-    logging.basicConfig(stream=arguments.logfile, format=logformat, level=loglevel)
-
-    return action(arguments)
 
 def parse_arguments(argv):
     """
@@ -38,18 +20,18 @@ def parse_arguments(argv):
     parser = argparse.ArgumentParser(description=docstring)
 
     parser.add_argument('-V', '--version', action='version',
-        version = version,
-        help = 'Print the version number and exit')
+                        version=version,
+                        help='Print the version number and exit')
     parser.add_argument('-v', '--verbose',
-        action='count', dest='verbosity', default=1,
-        help='Increase verbosity of screen output (eg, -v is verbose, '
-             '-vv more so)')
+                        action='count', dest='verbosity', default=1,
+                        help='Increase verbosity of screen output (eg, -v is verbose, '
+                        '-vv more so)')
     parser.add_argument('-q', '--quiet',
-        action='store_const', dest='verbosity', const=0,
-        help='Suppress output')
+                        action='store_const', dest='verbosity', const=0,
+                        help='Suppress output')
     parser.add_argument('--logfile', default=sys.stderr,
-        type= Opener('w'), metavar='FILE',
-        help='Write logging messages to FILE [default stderr]')
+                        type=Opener('w'), metavar='FILE',
+                        help='Write logging messages to FILE [default stderr]')
 
     ##########################
     # Setup all sub-commands #
@@ -64,7 +46,7 @@ def parse_arguments(argv):
     # End help sub-command
 
     # Organize submodules by argv
-    modules = [name for _,name,_ in pkgutil.iter_modules(subcommands.__path__)]
+    modules = [name for _, name, _ in pkgutil.iter_modules(subcommands.__path__)]
     modules = [m for m in modules if not m.startswith('_')]
     run = filter(lambda name: name in argv, modules)
 
@@ -89,11 +71,12 @@ def parse_arguments(argv):
             helpstr = '<add help text in docstring>'
 
         subparser = subparsers.add_parser(
-            name, help = helpstr,
-            description = mod.__doc__,
-            formatter_class = RawDescriptionHelpFormatter)
+            name, help=helpstr,
+            description=mod.__doc__,
+            formatter_class=RawDescriptionHelpFormatter)
         mod.build_parser(subparser)
         actions[name] = mod.action
+
     # Determine we have called ourself (e.g. "help <action>")
     # Set arguments to display help if parameter is set
     #           *or*
@@ -108,3 +91,23 @@ def parse_arguments(argv):
         return parse_arguments([str(arguments.action[0]), '-h'])
 
     return actions[action], arguments
+
+
+def main(argv):
+    action, arguments = parse_arguments(argv)
+
+    loglevel = {
+        0: logging.ERROR,
+        1: logging.WARNING,
+        2: logging.INFO,
+        3: logging.DEBUG,
+    }.get(arguments.verbosity, logging.DEBUG)
+
+    if arguments.verbosity > 1:
+        logformat = '%(levelname)s %(module)s %(lineno)s %(message)s'
+    else:
+        logformat = '%(message)s'
+
+    logging.basicConfig(stream=arguments.logfile, format=logformat, level=loglevel)
+
+    return action(arguments)
