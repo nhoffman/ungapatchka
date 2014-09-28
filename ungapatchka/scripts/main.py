@@ -93,7 +93,11 @@ def parse_arguments(argv):
     return actions[action], arguments
 
 
-def main(argv):
+def main(argv=None):
+
+    if argv is None:
+        argv = sys.argv[1:]
+
     action, arguments = parse_arguments(argv)
 
     loglevel = {

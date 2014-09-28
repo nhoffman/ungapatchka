@@ -19,7 +19,9 @@ params = {'author': 'Your name',
           'name': 'ungapatchka',
           'packages': find_packages(),
           'package_dir': {'ungapatchka': 'ungapatchka'},
-          'scripts': ['kapow'],
+          'entry_points': {
+              'console_scripts': ['kapow = ungapatchka.scripts.main:main']
+          },
           'version': __version__,
           'package_data': {'ungapatchka': package_data},
           'test_suite': 'tests'
