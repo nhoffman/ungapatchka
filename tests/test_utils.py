@@ -2,23 +2,13 @@
 Test utils module.
 """
 
-from os import path
-import unittest
 import logging
 
-from ungapatchka.utils import flattener, mkdir, Opener, opener
+from ungapatchka.utils import opener
 
 from __init__ import TestBase, get_testfile
 log = logging.getLogger(__name__)
 
-class Args(object):
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
-
-class TestFlatten(unittest.TestCase):
-    def test01(self):
-        L = [[1,2],['three',['four',5]]]
-        flattener(L)
 
 class TestOpener(TestBase):
     def setUp(self):
