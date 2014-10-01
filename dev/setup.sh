@@ -11,7 +11,7 @@ set -e
     $(find . -name "*.py")
 
 mv ungapatchka $1
-mv kapow.py $2
+mv kapow.py ${2}.py
 
 # set up new git repo
 rm -rf .git
