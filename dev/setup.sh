@@ -2,10 +2,12 @@
 
 if [[ -z $1 ]] || [[ -z $2 ]]; then
     echo "usage: dev/setup.sh projectname scriptname"
-    exit
+    exit 1
 fi
 
-./kapow repl -r ungapatchka:$1 -r kapow:$2 \
+set -e
+
+./kapow.py repl -r ungapatchka:$1 -r kapow:$2 \
     $(find . -name "*.py")
 
 mv ungapatchka $1
