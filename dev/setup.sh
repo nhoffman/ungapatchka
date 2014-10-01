@@ -5,21 +5,17 @@ if [[ -z $1 ]] || [[ -z $2 ]]; then
     exit
 fi
 
-if [[ $1 == $2 ]]; then
-    echo "Projectame and scriptname must be different."
-    exit
-fi
-
 ./kapow repl -r ungapatchka:$1 -r kapow:$2 \
-    $(find . -name "*.py" -or -name kapow)
+    $(find . -name "*.py")
 
 mv ungapatchka $1
-mv kapow $2
+mv kapow.py $2
 
 # set up new git repo
 rm -rf .git
 git init . && git add . && git commit -m "first commit"
+git tag -a -m v0.1.0 v0.1.0
 
-# reset version
-python setup.py -h > /dev/null
+# reset and check version
+python setup.py check_version
 
