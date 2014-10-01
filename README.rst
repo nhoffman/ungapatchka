@@ -3,8 +3,8 @@ ungapatchka: a python package template
 ======================================
 
 ungapatchka
-    Yiddish word that describes the overly ornate, busy, ridiculously
-    over-decorated, and garnished to the point of
+    Yiddish word that describes the overly ornate, busy,
+    ridiculously over-decorated, and garnished to the point of
     distaste. (www.urbandictionary.com/define.php?term=ungapatchka)
 
 .. contents:: Table of Contents
@@ -29,37 +29,43 @@ dependencies
 installation
 ============
 
-Clone the project from the git repository to create a new
-project. You will need to choose a name for the project (let's say
-"myproject"), and for the main script ("runme")::
+Clone the project from the git repository to create a new project. You
+will need to choose a name for the project (let's say "myproject"),
+and for the main script ("runme")::
 
-    $ git clone https://github.com/nhoffman/ungapatchka.git myproject
-    $ cd myproject && dev/setup.sh myproject runme
+  git clone https://github.com/nhoffman/ungapatchka.git myproject
+  cd myproject && dev/setup.sh myproject runme
 
 Kaopw! A new project with a new git repo::
 
-    $ git --no-pager log -n 1
-    commit 06a5280d89dc47f6a613488a96d244f4267f6b42
-    Author: Noah Hoffman
-    Date:   Mon Aug 6 22:46:46 2012 -0700
+  % git --no-pager log -n 1
+  commit 418307aa88c9733c5e72c1ecff63729d1239c1cc
+  Author: Noah Hoffman <noah.hoffman@gmail.com>
+  Date:   Tue Sep 30 21:45:43 2014 -0700
 
-	first commit
-    $ ./runme --version
-    0001.06a5280
+      first commit
+  % ./runme.py --version
+  0.1.0
 
-Now installation can be performed using ``distutils`` (which has no
-dependencies outside the Python standard library)::
+You'll need to have ``setuptools`` for installation::
 
-    sudo python setup.py install
+  python setup.py install
 
-or using ``pip`` (which must be installed separately)::
+or use ``pip``::
 
-    sudo pip install .
+  pip install .
 
 Subsequent (re)installation with pip should be performed using the
 ``-U`` option::
 
-    sudo pip install -U .
+  pip install -U .
+
+There's a handy script for bootstrapping a virtualenv (that is, if a
+recent version of virtualenv is not available, the source code is
+downloaded)::
+
+  dev/venv.py
+
 
 architecture
 ============
@@ -72,7 +78,8 @@ This project has the following subdirectories:
 * ``testfiles`` - files and data used for testing.
 * ``tests`` - subpackage implementing unit tests.
 
-Note that ``kapow`` and ``ungapatchka`` are placeholder names that are replaced with your script and project names during setup.
+Note that ``kapow.py`` and ``ungapatchka`` are placeholder names that
+are replaced with your script and project names during setup.
 
 execution
 =========
@@ -83,16 +90,21 @@ to run ``kapow`` from within the project directory by specifying the
 relative path to the script::
 
     % cd ungapatchka
-    % ./kapow --help
+    % ./kapow.py --help
 
 or::
 
-   % path/to/ungapatchka/kapow --help
+   % path/to/ungapatchka/kapow.py --help
 
 When invoked this way, the local version of the package is imported,
 even if the version of the package is installed to the system. This is
 very handy for development, and can avoid the requirement for a
 virtualenv in many cases.
+
+When the package is installed, an entry point is placed in the 'bin'
+directory corresponding to the python environment you used for
+installation (so if you installed using ``/usr/local/bin/python``, the
+script will be named ``/usr/local/bin/kapow``).
 
 Commands are constructed as follows. Every command starts with the
 name of the script, followed by an "action" followed by a series of
@@ -104,14 +116,13 @@ script and individual actions using the ``-h`` or ``--help`` options.
 versions
 ========
 
-We use abbrevited git sha hashes to identify the software version::
-
-    % ./kapow -V
-    0128.9790c13
-
-The version information is saved in ``ungapatchka/data`` when ``setup.py``
-is run (on installation, or even by executing ``python setup.py
--h``).
+The package version is defined using ``git describe --tags --dirty``
+(see http://git-scm.com/docs/git-describe for details).  The version
+information is updated and saved in the file ``ungapatchka/data/ver``
+when ``setup.py`` is run (on installation, or even by executing
+``python setup.py -h``). Run ``python setup.py check_version`` to make
+sure that the stored version matches the output of ``git
+describe --tags --dirty``.
 
 unit tests
 ==========
