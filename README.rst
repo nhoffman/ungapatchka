@@ -124,6 +124,11 @@ when ``setup.py`` is run (on installation, or even by executing
 sure that the stored version matches the output of ``git
 describe --tags --dirty``.
 
+Add a tag like this::
+
+  git tag -a -m 'version 0.1.0' 0.1.0
+
+
 unit tests
 ==========
 

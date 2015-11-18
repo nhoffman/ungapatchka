@@ -17,7 +17,7 @@ find . -name '*.pyc' | xargs rm
 # set up new git repo
 rm -rf .git
 git init . && git add . && git commit -m "first commit"
-git tag -a -m v0.1.0 v0.1.0
+git tag -a -m 0.1.0 0.1.0
 
 # reset and check version
 python setup.py check_version

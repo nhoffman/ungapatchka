@@ -27,7 +27,8 @@ class CheckVersion(Command):
         print 'the current version is', stored_version
 
 subprocess.call(
-    ('git describe --tags --dirty > ungapatchka/data/ver.tmp'
+    ('mkdir -p mkvenv/data && '
+     'git describe --tags --dirty > ungapatchka/data/ver.tmp '
      '&& mv ungapatchka/data/ver.tmp ungapatchka/data/ver '
      '|| rm -f ungapatchka/data/ver.tmp'),
     shell=True, stderr=open(os.devnull, "w"))
