@@ -23,4 +23,4 @@ def build_parser(parser):
 
 
 def action(args):
-    print 'monkey type:{}'.format(args.monkey_type)
+    print('monkey type:{}'.format(args.monkey_type))

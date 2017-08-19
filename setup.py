@@ -33,7 +33,7 @@ class CheckVersion(Command):
             ['git', 'describe', '--tags', '--dirty']).strip()
 
         assert stored_version == git_version
-        print 'the current version is', stored_version
+        print('the current version is', stored_version)
 
 
 package_data = ['data/*']
