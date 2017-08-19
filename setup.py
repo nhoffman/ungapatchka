@@ -5,6 +5,15 @@ import subprocess
 from distutils.core import Command
 from setuptools import setup, find_packages
 
+subprocess.call(
+    ('mkdir -p mkvenv/data && '
+     'git describe --tags --dirty > ungapatchka/data/ver.tmp '
+     '&& mv ungapatchka/data/ver.tmp ungapatchka/data/ver '
+     '|| rm -f ungapatchka/data/ver.tmp'),
+    shell=True, stderr=open(os.devnull, "w"))
+
+from ungapatchka import __version__
+
 
 class CheckVersion(Command):
     description = 'Confirm that the stored package version is correct'
@@ -26,15 +35,8 @@ class CheckVersion(Command):
         assert stored_version == git_version
         print 'the current version is', stored_version
 
-subprocess.call(
-    ('mkdir -p mkvenv/data && '
-     'git describe --tags --dirty > ungapatchka/data/ver.tmp '
-     '&& mv ungapatchka/data/ver.tmp ungapatchka/data/ver '
-     '|| rm -f ungapatchka/data/ver.tmp'),
-    shell=True, stderr=open(os.devnull, "w"))
 
-from ungapatchka import __version__
-package_data = glob.glob('data/*')
+package_data = ['data/*']
 
 params = {'author': 'Your name',
           'author_email': 'Your email',
