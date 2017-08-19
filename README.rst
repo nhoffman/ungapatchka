@@ -7,6 +7,9 @@ ungapatchka
     ridiculously over-decorated, and garnished to the point of
     distaste. (www.urbandictionary.com/define.php?term=ungapatchka)
 
+.. image:: https://travis-ci.org/nhoffman/borborygmi.svg?branch=master
+    :target: https://travis-ci.org/nhoffman/borborygmi
+
 .. contents:: Table of Contents
 
 why?
