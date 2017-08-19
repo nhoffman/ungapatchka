@@ -18,11 +18,11 @@ class TestOpener(TestBase):
     def test01(self):
         for suffix in ['txt', 'gz', 'bz2']:
             fn = get_testfile('lorem.'+suffix)
-            fobj = Opener()(fn)
-            self.assertEqual(next(fobj), self.firstline)
+            with Opener()(fn) as fobj:
+                self.assertEqual(next(fobj), self.firstline)
 
     def test02(self):
         for suffix in ['txt', 'gz', 'bz2']:
             fn = get_testfile('lorem.'+suffix)
-            fobj = Opener('r')(fn)
-            self.assertEqual(next(fobj), self.firstline)
+            with Opener('r')(fn) as fobj:
+                self.assertEqual(next(fobj), self.firstline)
