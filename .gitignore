@@ -2,7 +2,7 @@
 build
 working
 test_output
-data/ver
+ungapatchka/data/ver
 MANIFEST
 dist
 *-env
