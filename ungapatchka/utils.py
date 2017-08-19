@@ -1,11 +1,18 @@
 import os
-import bz2
 import gzip
 import logging
 import shutil
 import sys
 
 from os import path
+
+try:
+    import bz2
+except ImportError as err:
+    def bz2_open(filename, mode, *args, **kwargs):
+        sys.exit(err)
+else:
+    bz2_open = bz2.open if hasattr(bz2, 'open') else bz2.BZ2File
 
 log = logging.getLogger(__name__)
 
@@ -45,36 +52,33 @@ def mkdir(dirpath, clobber=False):
 
 
 class Opener(object):
-    """Factory for creating file objects
+    """Factory for creating file objects. Transparenty opens compressed
+    files for reading or writing based on suffix (.gz and .bz2 only).
 
-    Keyword Arguments:
-    - mode -- A string indicating how the file is to be opened. Accepts the
-      same values as the builtin open() function.
-    - bufsize -- The file's desired buffer size. Accepts the same values as
-      the builtin open() function.
+    Example::
+
+        with Opener()('in.txt') as infile, Opener('w')('out.gz') as outfile:
+            outfile.write(infile.read())
     """
 
-    def __init__(self, mode='r', bufsize=-1):
-        self._mode = mode
-        self._bufsize = bufsize
+    def __init__(self, mode='r', *args, **kwargs):
+        self.mode = mode
+        self.args = args
+        self.kwargs = kwargs
+        self.writable = 'w' in self.mode
 
-    def __call__(self, string):
-        if string is sys.stdout or string is sys.stdin:
-            return string
-        elif string == '-':
-            return sys.stdin if 'r' in self._mode else sys.stdout
-        elif string.endswith('.bz2'):
-            return bz2.BZ2File(string, self._mode, self._bufsize)
-        elif string.endswith('.gz'):
-            return gzip.open(string, self._mode, self._bufsize)
+    def __call__(self, obj):
+        if obj is sys.stdout or obj is sys.stdin:
+            return obj
+        elif obj == '-':
+            return sys.stdout if self.writable else sys.stdin
         else:
-            return open(string, self._mode, self._bufsize)
-
-    def __repr__(self):
-        args = self._mode, self._bufsize
-        args_str = ', '.join(repr(arg) for arg in args if arg != -1)
-        return '{}({})'.format(type(self).__name__, args_str)
-
-
-def opener(pth, mode='r', bufsize=-1):
-    return Opener(mode, bufsize)(pth)
+            openers = {'bz2': bz2_open, 'gz': gzip.open}
+            __, suffix = obj.rsplit('.', 1)
+            # in python3, both bz2 and gz libraries default to binary input and output
+            mode = self.mode
+            if sys.version_info.major == 3 and suffix in openers \
+               and mode in {'w', 'r'}:
+                mode += 't'
+            opener = openers.get(suffix, open)
+            return opener(obj, mode=mode, *self.args, **self.kwargs)
