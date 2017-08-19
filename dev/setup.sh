@@ -8,7 +8,7 @@ fi
 set -e
 
 ./kapow.py repl -r ungapatchka:$1 -r kapow:$2 \
-    $(find . -name "*.py")
+    $(find . -name "*.py") .gitignore README.rst
 
 mv ungapatchka $1
 mv kapow.py ${2}.py
