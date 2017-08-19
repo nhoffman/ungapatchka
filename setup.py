@@ -6,7 +6,7 @@ from distutils.core import Command
 from setuptools import setup, find_packages
 
 subprocess.call(
-    ('mkdir -p mkvenv/data && '
+    ('mkdir -p ungapatchka/data && '
      'git describe --tags --dirty > ungapatchka/data/ver.tmp '
      '&& mv ungapatchka/data/ver.tmp ungapatchka/data/ver '
      '|| rm -f ungapatchka/data/ver.tmp'),
