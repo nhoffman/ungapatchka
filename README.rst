@@ -26,7 +26,7 @@ why?
 dependencies
 ============
 
-* Python 2.7.x
+* Python 2.7 or 3.3+
 * Tested on Linux and OS X.
 
 installation
